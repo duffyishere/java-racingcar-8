@@ -8,8 +8,10 @@ import camp.nextstep.edu.missionutils.Console;
 public class Game {
     private Map<String, Integer> players = new HashMap<>();
     private int maxRound = 0;
+    private int currentRound = 0;
 
     public void start() {
+        setup();
     }
 
     private void setup() {
@@ -26,8 +28,9 @@ public class Game {
         String maxRoundInput = Console.readLine().trim();
         try {
             this.maxRound = Integer.parseInt(maxRoundInput);
+            if (maxRound < 1) throw new IllegalArgumentException("진행할 라운드 수는 0보다 커야합니다.");
         } catch (NumberFormatException exception) {
-                throw new IllegalArgumentException("숫자만 입력 가능합니다.");
+                throw new IllegalArgumentException("진행할 라운드 수는 숫자만 입력 가능합니다.");
         }
     }
 }
