@@ -4,25 +4,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 import camp.nextstep.edu.missionutils.Console;
+import camp.nextstep.edu.missionutils.Randoms;
 
 public class Game {
-    private Map<String, Integer> players = new HashMap<>();
+    private Map<String, Integer> playerLevels = new HashMap<>();
     private int maxRound = 0;
-    private int currentRound = 0;
+    private int currentRound = 1;
 
     public void start() {
         setup();
+        while(this.currentRound <= this.maxRound) {
+            playRound();
+            printProgress();
+            this.currentRound++;
+        }
     }
 
     private void setup() {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉽표(,) 기준으로 구분)");
-        String playersInput = Console.readLine();
-        for (String player: playersInput.split(",")) {
-            if (players.containsKey(player))
+        String playerLevelsInput = Console.readLine();
+        for (String player: playerLevelsInput.split(",")) {
+            player = player.trim();
+            if (playerLevels.containsKey(player))
                 throw new IllegalArgumentException("이미 등록된 자동차 이름입니다.");
             if (4 < player.length())
                 throw new IllegalArgumentException("자동차 이름은 5글자 이하만 가능합니다.");
-            players.put(player, 0);
+            playerLevels.put(player, 0);
         }
 
         System.out.println("시도할 횟수는 몇 회인가요?");
@@ -34,5 +41,32 @@ public class Game {
         } catch (NumberFormatException exception) {
                 throw new IllegalArgumentException("진행할 라운드 수는 숫자만 입력 가능합니다.");
         }
+    }
+
+    private void playRound() {
+        for (String player: playerLevels.keySet()) {
+            if (canGoNext()) {
+                int nextLevel = playerLevels.get(player) + 1;
+                playerLevels.put(player, nextLevel);
+            }
+        }
+    }
+
+    private boolean canGoNext() {
+        int value = Randoms.pickNumberInRange(0, 9);
+        return 3 < value;
+    }
+
+    private void printProgress() {
+        StringBuffer sb = new StringBuffer();
+        for (String player: playerLevels.keySet()) {
+            int level = playerLevels.get(player);
+            sb.append(player + " : ");
+            for (int i = 1; i <= level; i++) {
+                sb.append("-");
+            }
+            sb.append("\n");
+        }
+        System.out.println(sb.toString());
     }
 }
