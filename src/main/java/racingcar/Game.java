@@ -18,9 +18,10 @@ public class Game {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉽표(,) 기준으로 구분)");
         String playersInput = Console.readLine();
         for (String player: playersInput.split(",")) {
-            if (players.containsKey(player)) {
+            if (players.containsKey(player))
                 throw new IllegalArgumentException("이미 등록된 자동차 이름입니다.");
-            }
+            if (4 < player.length())
+                throw new IllegalArgumentException("자동차 이름은 5글자 이하만 가능합니다.");
             players.put(player, 0);
         }
 
@@ -28,7 +29,8 @@ public class Game {
         String maxRoundInput = Console.readLine().trim();
         try {
             this.maxRound = Integer.parseInt(maxRoundInput);
-            if (maxRound < 1) throw new IllegalArgumentException("진행할 라운드 수는 0보다 커야합니다.");
+            if (maxRound < 1)
+                throw new IllegalArgumentException("진행할 라운드 수는 0보다 커야합니다.");
         } catch (NumberFormatException exception) {
                 throw new IllegalArgumentException("진행할 라운드 수는 숫자만 입력 가능합니다.");
         }
