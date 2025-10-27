@@ -16,7 +16,7 @@ public class Game {
 
     private void validateName(String name) {
         if (name.length() > 5) {
-            throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다: " + name);
+            throw new IllegalArgumentException("자동차 이름은 5글자 이하만 가능합니다: " + name);
         }
         if (playerStatus.containsKey(name)) {
             throw new IllegalArgumentException("이미 등록된 자동차 이름입니다: " + name);
@@ -36,7 +36,7 @@ public class Game {
         return playerStatus;
     }
 
-    public List<String> findWinner() {
+    public List<String> findWinners() {
         List<String> winners = new ArrayList<>();
         int maxLevel = 0;
         for (String player: playerStatus.keySet()) {

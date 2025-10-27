@@ -17,7 +17,7 @@ public class GameController {
             printProgress(game.getPlayerStatus());
         }
 
-        printWinners(game.findWinner());
+        printWinners(game.findWinners());
     }
 
     public List<String> readPlayerNames() {
