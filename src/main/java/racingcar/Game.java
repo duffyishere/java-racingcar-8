@@ -7,7 +7,7 @@ import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 
 public class Game {
-    private Map<String, Integer> playerLevels = new HashMap<>();
+    private final Map<String, Integer> playerLevels = new HashMap<>();
     private int maxRound = 0;
     private int currentRound = 1;
 
@@ -58,15 +58,13 @@ public class Game {
     }
 
     private void printProgress() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (String player: playerLevels.keySet()) {
             int level = playerLevels.get(player);
-            sb.append(player + " : ");
-            for (int i = 1; i <= level; i++) {
-                sb.append("-");
-            }
+            sb.append(player).append(" : ");
+            sb.append("-".repeat(Math.max(0, level)));
             sb.append("\n");
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 }
