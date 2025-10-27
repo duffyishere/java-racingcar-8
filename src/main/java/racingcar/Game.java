@@ -1,6 +1,8 @@
 package racingcar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import camp.nextstep.edu.missionutils.Console;
@@ -18,10 +20,11 @@ public class Game {
             printProgress();
             this.currentRound++;
         }
+        printWinner();
     }
 
     private void setup() {
-        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉽표(,) 기준으로 구분)");
+        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         String playerLevelsInput = Console.readLine();
         for (String player: playerLevelsInput.split(",")) {
             player = player.trim();
@@ -66,5 +69,29 @@ public class Game {
             sb.append("\n");
         }
         System.out.println(sb);
+    }
+
+    private List<String> findWinner() {
+        List<String> winners = new ArrayList<>();
+        int maxLevel = 0;
+        for (String player: playerLevels.keySet()) {
+            int level = playerLevels.get(player);
+            if (maxLevel < level) {
+                maxLevel = level;
+                winners.clear();
+                winners.add(player);
+            } else if (maxLevel == level) {
+                winners.add(player);
+            }
+        }
+        return winners;
+    }
+
+    private void printWinner() {
+        List<String> winners = findWinner();
+        StringBuilder sb = new StringBuilder();
+        sb.append("최종 우승자 : ");
+        winners.forEach(winner -> sb.append(winner).append(", "));
+        System.out.println(sb.substring(0, sb.length() - 2));
     }
 }
